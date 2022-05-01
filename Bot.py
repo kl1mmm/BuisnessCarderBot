@@ -25,17 +25,14 @@ def textByUser(msg):
         if msg.text == 'Экранные кнопки':
             bot.send_message(msg.chat.id, MessageScreen1, reply_markup=markupScreen)
         elif msg.text == 'Начать создание визитки':
-            bot.send_message(bot.send_message(msg.chat.id, MessageStartActive, reply_markup=markupScreen))
+            bot.send_message(msg.chat.id, MessageStartActive, reply_markup=markupScreen)
+        elif msg.text == 'Кнопка 1' or msg.text == 'Кнопка 2':
+            pass
         else:
             bot.send_message(msg.chat.id, MessageError, reply_markup=markupStart)
 
 
 #-Обработка экранных кнопок-----------------------------------------------------------------------------------------------------------
-@bot.callback_query_handler(func=lambda c: c.data)
-def answer_callback(callback):
-    if callback.data == '1':
-        MessageTest = 'Пикнул кнопку'
-    elif callback.data == '2':
-        MessageTest = 'Пикнул кнопку'
+
 
 bot.polling(none_stop = True)

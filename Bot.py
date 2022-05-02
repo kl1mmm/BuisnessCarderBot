@@ -23,9 +23,9 @@ def textByUser(msg):
             bot.send_message(msg.chat.id, MessageScreen1, reply_markup=markupScreen)
         elif msg.text == 'Давай начнём работу.':
             bot.send_message(msg.chat.id, MessageStartActive, reply_markup=markupScreen)
-        elif msg.text == 'Постой, я не готов.' or 'Стоп' or '/stop':
+        elif msg.text == 'Постой, я не готов.':
             bot.send_message(msg.chat.id, MessageStop, reply_markup=markupStart)
-        elif msg.text == 'Помощь и краткая аннотация к боту.' or 'Помощь' or 'Инструкция' or 'Что делать?':
+        elif msg.text == 'Помощь и краткая аннотация к боту.':
             bot.send_message(msg.chat.id, MessageHelp, reply_markup=markupStart)
         elif msg.text == 'Создание онлайн-визитки':
             bot.send_message(msg.chat.id, MessageStartCreate, reply_markup=telebot.types.ReplyKeyboardRemove())

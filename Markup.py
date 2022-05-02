@@ -2,15 +2,23 @@
 from telebot import types
 
 #-Кнопки-----------------------------------------------------------------------------------------------------------------------
-StartKey = types.KeyboardButton(text='Начать создание визитки')
+StartKey = types.KeyboardButton(text='Давай начнём работу.')
+KeyHelp = types.KeyboardButton(text='Помощь и краткая аннотация к боту.')
 
-KeyScreen = types.KeyboardButton('Экранные кнопки')
+KeyScreen = types.KeyboardButton('Меню')
 
-Key1 = types.InlineKeyboardButton(text='Кнопка 1', callback_data='1')
-Key2 = types.InlineKeyboardButton(text='Кнопка 2', callback_data='2')
+KeyGo = types.KeyboardButton('Создание онлайн-визитки')
+KeyStop = types.KeyboardButton('Постой, я не готов.')
+
+KeyAddPhoto = types.InlineKeyboardButton('Фото', callback_data='photo')
+KeyAddDiscrip = types.InlineKeyboardButton('Описание', callback_data='discription')
+KeyAddContacts = types.InlineKeyboardButton('Контакты', callback_data='contacts')
 #-Меню старта------------------------------------------------------------------------------------------------------------------
 markupStart = types.ReplyKeyboardMarkup(resize_keyboard=True)
-markupStart.add(StartKey)
+markupStart.add(StartKey, KeyHelp)
 #-Меню на экране---------------------------------------------------------------------------------------------------------------
 markupScreen = types.ReplyKeyboardMarkup()
-markupScreen.add(Key1, Key2)
+markupScreen.add(KeyGo, KeyStop)
+#-Меню в сообщении-------------------------------------------------------------------------------------------------------------
+markupMessage = types.InlineKeyboardMarkup()
+markupMessage.add(KeyAddPhoto, KeyAddDiscrip, KeyAddContacts)

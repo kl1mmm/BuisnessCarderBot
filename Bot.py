@@ -4,11 +4,8 @@ import telebot
 from Setting import ApiKeyTelegramBot
 from Markup import markupStart
 from Markup import markupScreen
-from String import MessageStart
-from String import MessageStartActive
-from String import MessageScreen1
-from String import MessageError
-from String import MessageTest
+from Markup import markupMessage
+from String import *
 
 bot = telebot.TeleBot(ApiKeyTelegramBot)
 
@@ -22,12 +19,18 @@ def start(msg):
 @bot.message_handler(content_types=['text'])
 def textByUser(msg):
     if msg.chat.type == 'private':
-        if msg.text == 'Экранные кнопки':
+        if msg.text == 'Меню':
             bot.send_message(msg.chat.id, MessageScreen1, reply_markup=markupScreen)
-        elif msg.text == 'Начать создание визитки':
+        elif msg.text == 'Давай начнём работу.':
             bot.send_message(msg.chat.id, MessageStartActive, reply_markup=markupScreen)
-        elif msg.text == 'Кнопка 1' or msg.text == 'Кнопка 2':
-            pass
+        elif msg.text == 'Постой, я не готов.':
+            bot.send_message(msg.chat.id, MessageStop, reply_markup=markupStart)
+        elif msg.text == 'Помощь и краткая аннотация к боту.':
+            bot.send_message(msg.chat.id, MessageHelp, reply_markup=markupStart)
+        elif msg.text == 'Создание онлайн-визитки':
+            bot.send_message(msg.chat.id, MessageStartCreate, reply_markup=telebot.types.ReplyKeyboardRemove())
+            bot.send_message(msg.chat.id, MessageCreatingCard, reply_markup=markupMessage)
+
         else:
             bot.send_message(msg.chat.id, MessageError, reply_markup=markupStart)
 

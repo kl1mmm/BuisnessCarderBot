@@ -30,10 +30,21 @@ def textByUser(msg):
         elif msg.text == 'Создание онлайн-визитки':
             bot.send_message(msg.chat.id, MessageStartCreate, reply_markup=telebot.types.ReplyKeyboardRemove())
             bot.send_message(msg.chat.id, MessageCreatingCard, reply_markup=markupMessage)
-
         else:
             bot.send_message(msg.chat.id, MessageError, reply_markup=markupStart)
 
+@bot.callback_query_handler(func=lambda c: c.data)
+def card_handling(callback):
+    PhotoAdd, DiscripAdd, ContactsAdd = False, False, False
+    if callback.data == 'photo':
+        PhotoAdd = True
+        bot.answer_callback_query(callback.id, text="Ваше фото успешно загружено!")
+    if callback.data == 'discription':
+        DiscripAdd = True
+        bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
+    if callback.data == 'contacts':
+        ContactsAdd = True
+        bot.answer_callback_query(callback.id, text="Контакты были внесены в визитку.")
 
 #-Обработка экранных кнопок-----------------------------------------------------------------------------------------------------------
 

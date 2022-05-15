@@ -10,7 +10,7 @@ from String import *
 
 bot = telebot.TeleBot(ApiKeyTelegramBot)
 
-DataClient = []
+DataClient = ['', '', '', '', '']
 
 #-Отправка стартового сообщения-------------------------------------------------------------------------------------------------------
 @bot.message_handler(commands=['start'])
@@ -37,12 +37,26 @@ def textByUser(msg):
             bot.send_message(msg.chat.id, MessageError, reply_markup=markupStart)
 
 @bot.message_handler(content_types=['text'])
-def after_text_Discrip(msg):
-    DataClient[0] = msg.Text
+def after_text_Name(msg):
+    DataClient[0] = msg.text
+    msg = bot.send_message(chat_id=msg.chat.id, text='Специализация:')
+    bot.register_next_step_handler(msg, after_text_Spec)
+
+@bot.message_handler(content_types=['text'])
+def after_text_Spec(msg):
+    DataClient[1] = msg.text
+    msg = bot.send_message(chat_id=msg.chat.id, text='Хорошо, краткая информация готова.')
+
+
+@bot.message_handler(content_types=['text'])
 def after_text_Phone(msg):
     DataClient[1] = msg.Text
+
+@bot.message_handler(content_types=['text'])
 def after_text_Email(msg):
     DataClient[2] = msg.Text
+
+@bot.message_handler(content_types=['text'])
 def after_text_Address(msg):
     DataClient[3] = msg.Text
 
@@ -53,8 +67,8 @@ def card_handling(callback):
     DiscripAdd, ContactsAdd = False, False
     if callback.data == 'discription':
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskDiscrip)
-        bot.send_message(chat_id=callback.message.chat.id, text=MessageDiscripExample)
-
+        msg = bot.send_message(chat_id=callback.message.chat.id, text=MessageDiscripExample)
+        bot.register_next_step_handler(msg, after_text_Name)
 
         bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
         DiscripAdd = True

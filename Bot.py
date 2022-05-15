@@ -11,6 +11,8 @@ from String import *
 bot = telebot.TeleBot(ApiKeyTelegramBot)
 
 DataClient = ['', '', '', '', '']
+DiscripAdd, ContactsAdd = False, False
+Phone, Email, Address = False, False, False
 
 #-Отправка стартового сообщения-------------------------------------------------------------------------------------------------------
 @bot.message_handler(commands=['start'])
@@ -42,48 +44,52 @@ def after_text_Name(msg):
     msg = bot.send_message(chat_id=msg.chat.id, text='Специализация:')
     bot.register_next_step_handler(msg, after_text_Spec)
 
+
 @bot.message_handler(content_types=['text'])
 def after_text_Spec(msg):
     DataClient[1] = msg.text
     msg = bot.send_message(chat_id=msg.chat.id, text='Хорошо, краткая информация готова.')
+    DiscripAdd = True
 
 
 @bot.message_handler(content_types=['text'])
 def after_text_Phone(msg):
-    DataClient[1] = msg.Text
+    DataClient[2] = msg.Text
+    Phone = True
+
 
 @bot.message_handler(content_types=['text'])
 def after_text_Email(msg):
-    DataClient[2] = msg.Text
+    DataClient[3] = msg.Text
+    Email = True
+
 
 @bot.message_handler(content_types=['text'])
 def after_text_Address(msg):
-    DataClient[3] = msg.Text
+    DataClient[4] = msg.Text
+    Address = True
 
 
 #-Обработка экранных кнопок-----------------------------------------------------------------------------------------------------------
 @bot.callback_query_handler(func=lambda c: c.data)
 def card_handling(callback):
-    DiscripAdd, ContactsAdd = False, False
     if callback.data == 'discription':
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskDiscrip)
         msg = bot.send_message(chat_id=callback.message.chat.id, text=MessageDiscripExample)
         bot.register_next_step_handler(msg, after_text_Name)
 
-        bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
-        DiscripAdd = True
+#        bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
     if callback.data == 'contacts':
-        Phone, Email, Address = False, False, False
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskContacts, reply_markup=markupAddContacts)
         if callback.data == 'phone':
             msg = bot.send_message(chat_id=callback.message.chat.id, text='Отправь нужный номер телефона')
             bot.register_next_step_handler(msg, after_text_Phone)
             bot.answer_callback_query(callback.id, text="Номер телефона получен.")
-            Phone = True
+
         if callback.data == 'email':
-            Email = True
+            pass
         if callback.data == 'address':
-            Address = True
+            pass
 
         bot.answer_callback_query(callback.id, text="Контакты были внесены в визитку.")
         ContactsAdd = True

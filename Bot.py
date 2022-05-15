@@ -51,9 +51,6 @@ def after_text_Address(msg):
 @bot.callback_query_handler(func=lambda c: c.data)
 def card_handling(callback):
     DiscripAdd, ContactsAdd = False, False
-    ###if callback.data == 'photo':
-    ###    PhotoAdd = True
-    ###    bot.answer_callback_query(callback.id, text="Ваше фото успешно загружено!")
     if callback.data == 'discription':
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskDiscrip)
         bot.send_message(chat_id=callback.message.chat.id, text=MessageDiscripExample)

@@ -60,21 +60,23 @@ def after_text_Spec(msg):
 
 @bot.message_handler(content_types=['text'])
 def after_text_Phone(msg):
-    DataClient[2] = msg.Text
+    DataClient[2] = msg.text
     Phone = True
     bot.send_message(chat_id=msg.chat.id, text="Номер телефона получен.")
     bot.send_message(chat_id=msg.chat.id, text=MsgFinalLoad, reply_markup=markupFinalLoad)
 
 @bot.message_handler(content_types=['text'])
 def after_text_Email(msg):
-    DataClient[3] = msg.Text
+    DataClient[3] = msg.text
     Email = True
+    bot.send_message(chat_id=msg.chat.id, text='Почта успешно записана.')
 
 
 @bot.message_handler(content_types=['text'])
 def after_text_Address(msg):
-    DataClient[4] = msg.Text
+    DataClient[4] = msg.text
     Address = True
+    bot.send_message(chat_id=msg.chat.id, text='Адрес был добавлен!')
 
 
 #-Обработка экранных кнопок-----------------------------------------------------------------------------------------------------------
@@ -88,16 +90,15 @@ def card_handling(callback):
     if callback.data == 'contacts':
         bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskContacts, reply_markup=markupAddContacts)
-        if callback.data == 'phone':
-            msg = bot.send_message(chat_id=callback.message.chat.id, text='Отправь нужный номер телефона')
-            bot.register_next_step_handler(msg, after_text_Phone)
-        if callback.data == 'email':
-            pass
-        if callback.data == 'address':
-            pass
-
-        bot.answer_callback_query(callback.id, text="Контакты были внесены в визитку.")
-        ContactsAdd = True
+    if callback.data == 'phone':
+        msg = bot.send_message(chat_id=callback.message.chat.id, text='Отправь нужный номер телефона:')
+        bot.register_next_step_handler(msg, after_text_Phone)
+    if callback.data == 'email':
+        msg = bot.send_message(chat_id=callback.message.chat.id, text='Твоя электронная почта: ')
+        bot.register_next_step_handler(msg, after_text_Email)
+    if callback.data == 'address':
+        msg = bot.send_message(chat_id=callback.message.chat.id, text='Твой адрес для клиентов: ')
+        bot.register_next_step_handler(msg, after_text_Address)
 
 
 bot.polling(none_stop = True)

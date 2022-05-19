@@ -11,6 +11,7 @@ from Markup import markupFinalLoad
 from Markup import markupSelectTemplate
 from Markup import markupThanks
 from Markup import markupGetCard
+from Markup import markupRemove
 from String import *
 
 bot = telebot.TeleBot(ApiKeyTelegramBot)
@@ -54,7 +55,8 @@ def textByUser(msg):
             visit_card = open('/Users/ilyaklimov/Desktop/Учёба/Программная инженерия/BuisenssCarderBot/templates/BuisnessCard.png', 'rb')
             bot.send_document(msg.chat.id, visit_card, reply_markup=markupThanks)
         elif msg.text == 'Благодарю!':
-            bot.send_message(chat_id=msg.chat.id, text='Рад быть полезным.')
+            bot.send_message(chat_id=msg.chat.id, text='Рад быть полезным.', reply_markup=markupRemove)
+            bot.send_message(chat_id=msg.chat.id, text='При желании создать новую визитку, пиши: "Меню" ⚙️.')
         else:
             bot.send_message(msg.chat.id, MessageError, reply_markup=markupStart)
 

@@ -59,3 +59,6 @@ markupMessage.add(KeyAddDiscrip, KeyAddContacts)
 
 markupAddContacts = types.InlineKeyboardMarkup()
 markupAddContacts.add(KeyContactsPhone, KeyContactsEmail, KeyContactsAddress)
+
+#-Убрать меню------------------------------------------------------------------------------------------------------------------
+markupRemove = types.ReplyKeyboardRemove()

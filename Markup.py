@@ -12,6 +12,14 @@ KeyStop = types.KeyboardButton('Постой, я не готов.')
 
 KeyFinalLoad = types.KeyboardButton('Завершить создание визитки.')
 
+KeySelectTemplate1 = types.KeyboardButton('Первый вариант')
+KeySelectTemplate2 = types.KeyboardButton('Второй вариант')
+KeySelectTemplate3 = types.KeyboardButton('Третий вариант')
+
+KeyThanks = types.KeyboardButton('Спасибо!)')
+
+KeyGetCard = types.KeyboardButton('Можно визиточку?')
+
 ###KeyAddPhoto = types.InlineKeyboardButton('Фото', callback_data='photo') --- В логистической реализации
 KeyAddDiscrip = types.InlineKeyboardButton('Подпись', callback_data='discription')
 KeyAddContacts = types.InlineKeyboardButton('Контакты', callback_data='contacts')
@@ -25,9 +33,19 @@ KeyContactsAddress = types.InlineKeyboardButton('Адрес', callback_data='add
 markupStart = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markupStart.add(StartKey, KeyHelp)
 
+#-Меню завершения внесения данных----------------------------------------------------------------------------------------------
 markupFinalLoad = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markupFinalLoad.add(KeyFinalLoad)
 
+#-Меню выбора шаблона----------------------------------------------------------------------------------------------------------
+markupSelectTemplate = types.ReplyKeyboardMarkup(resize_keyboard=True)
+markupSelectTemplate.add(KeySelectTemplate1, KeySelectTemplate2, KeySelectTemplate3)
+
+markupThanks = types.ReplyKeyboardMarkup(resize_keyboard=True)
+markupThanks.add(KeyThanks)
+
+markupGetCard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+markupGetCard.add(KeyGetCard)
 
 #-Меню на экране---------------------------------------------------------------------------------------------------------------
 markupScreen = types.ReplyKeyboardMarkup()

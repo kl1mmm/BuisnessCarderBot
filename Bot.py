@@ -6,6 +6,7 @@ from Markup import markupStart
 from Markup import markupScreen
 from Markup import markupMessage
 from Markup import markupAddContacts
+from Markup import markupFinalLoad
 from String import *
 
 bot = telebot.TeleBot(ApiKeyTelegramBot)
@@ -48,15 +49,21 @@ def after_text_Name(msg):
 @bot.message_handler(content_types=['text'])
 def after_text_Spec(msg):
     DataClient[1] = msg.text
-    msg = bot.send_message(chat_id=msg.chat.id, text='Хорошо, краткая информация готова.')
     DiscripAdd = True
+    if ContactsAdd == False:
+        bot.send_message(chat_id=msg.chat.id, text='Хорошо, краткая информация готова. Теперь, в том же сообщении, где нажимал "Подпись", выбери раздел "Контакты".')
+    else:
+        bot.send_message(chat_id=msg.chat.id, text='Отлично, данные для визитки полностью внесены!', reply_markup=markupFinalLoad)
+    exit()
+
 
 
 @bot.message_handler(content_types=['text'])
 def after_text_Phone(msg):
     DataClient[2] = msg.Text
     Phone = True
-
+    bot.send_message(chat_id=msg.chat.id, text="Номер телефона получен.")
+    bot.send_message(chat_id=msg.chat.id, text=MsgFinalLoad, reply_markup=markupFinalLoad)
 
 @bot.message_handler(content_types=['text'])
 def after_text_Email(msg):
@@ -78,14 +85,12 @@ def card_handling(callback):
         msg = bot.send_message(chat_id=callback.message.chat.id, text=MessageDiscripExample)
         bot.register_next_step_handler(msg, after_text_Name)
 
-#        bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
     if callback.data == 'contacts':
+        bot.answer_callback_query(callback.id, text="Отлично. Теперь описание реализовано.")
         bot.send_message(chat_id=callback.message.chat.id, text=MessageAskContacts, reply_markup=markupAddContacts)
         if callback.data == 'phone':
             msg = bot.send_message(chat_id=callback.message.chat.id, text='Отправь нужный номер телефона')
             bot.register_next_step_handler(msg, after_text_Phone)
-            bot.answer_callback_query(callback.id, text="Номер телефона получен.")
-
         if callback.data == 'email':
             pass
         if callback.data == 'address':

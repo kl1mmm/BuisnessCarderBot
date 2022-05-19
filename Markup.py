@@ -10,6 +10,8 @@ KeyScreen = types.KeyboardButton('Меню')
 KeyGo = types.KeyboardButton('Создание онлайн-визитки')
 KeyStop = types.KeyboardButton('Постой, я не готов.')
 
+KeyFinalLoad = types.KeyboardButton('Завершить создание визитки.')
+
 ###KeyAddPhoto = types.InlineKeyboardButton('Фото', callback_data='photo') --- В логистической реализации
 KeyAddDiscrip = types.InlineKeyboardButton('Подпись', callback_data='discription')
 KeyAddContacts = types.InlineKeyboardButton('Контакты', callback_data='contacts')
@@ -22,6 +24,9 @@ KeyContactsAddress = types.InlineKeyboardButton('Адрес', callback_data='add
 #-Меню старта------------------------------------------------------------------------------------------------------------------
 markupStart = types.ReplyKeyboardMarkup(resize_keyboard=True)
 markupStart.add(StartKey, KeyHelp)
+
+markupFinalLoad = types.ReplyKeyboardMarkup(resize_keyboard=True)
+markupFinalLoad.add(KeyFinalLoad)
 
 
 #-Меню на экране---------------------------------------------------------------------------------------------------------------
